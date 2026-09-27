@@ -303,7 +303,7 @@ label('12', '#f5c518', [-2,17,0]);
 // ===== Tool carriage — everything below travels together along the bed =====
 const feedMinX = -22, feedMaxX = 22;   // travel range: just off the chuck to just short of the tailstock
 const toolAssembly = new THREE.Group();
-toolAssembly.position.set(2,0,0);
+toolAssembly.position.set(2,0,1.8); // slightly more backward
 group.add(toolAssembly);
 function aBox(w,h,d,color,pos,rot,opts){
   opts = opts||{};
@@ -599,7 +599,7 @@ document.getElementById('btnReset').addEventListener('click', ()=>{
   running = true;
   carriagePhase = 'cut';
   toolAssembly.position.x = feedMaxX;
-  toolAssembly.position.z = 0;
+  toolAssembly.position.z = 1.8; // return to the slightly-more-back position
   sparkTimer = 0.3;
   document.getElementById('btnPlay').textContent = '⏸ Pause Simulation';
 });
@@ -733,8 +733,8 @@ function animate(now){
       }
     } else if(carriagePhase === 'lower'){
       toolAssembly.position.z -= LIFT_SPEED * dt;
-      if(toolAssembly.position.z <= 0){
-        toolAssembly.position.z = 0;
+      if(toolAssembly.position.z <= 1.8){
+        toolAssembly.position.z = 1.8;
         carriagePhase = 'cut';
       }
     }
